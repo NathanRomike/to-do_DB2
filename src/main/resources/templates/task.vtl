@@ -1,0 +1,18 @@
+<h3>Here are all the categories in $task.getDescription():</h3>
+
+#foreach ($category in $task.getCategories())
+  <h1>$category.getName()</h1>
+#end
+
+<h1>Update $task.getDescription()</h1>
+
+<form action="/tasks/$Task.getId()" method="post">
+  <input id="id" name="id" type="hidden" value="$task.getId()">
+
+  <div class="form-group">
+    <label for="description">Update Task Description</label>
+    <input id="description" name="description" type="text">
+  </div>
+
+  <button type="submit" class="btn btn-warning">Update Task</button>
+</form>

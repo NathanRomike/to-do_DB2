@@ -4,6 +4,20 @@
   <h1>$task.getDescription()</h1>
 #end
 
-<a href="/categories/$category.getId()/tasks/new" class="btn btn-info">Add a new task</a>
+
+<h1>Add a Task to $category.getName() </h1>
+
+<form action="/categories/$category.getId()" method="post">
+  <input id="categoryId" name="categoryId" type="hidden" value="$category.getId()">
+
+  <div class="form-group">
+    <label for="description">Task Description</label>
+    <input id="description" name="description" type="text">
+  </div>
+
+  <button type="submit" class="btn btn-warning">Add Task</button>
+</form>
+
+
 <a href="/categories" class="btn btn-default">View All Categories</a>
 <a href="/all-tasks" class="btn btn-warning">All tasks</a>

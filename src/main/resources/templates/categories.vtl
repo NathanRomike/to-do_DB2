@@ -4,6 +4,13 @@
  <h3><a href="/categories/$category.getId()">$category.getName()</a></h3>
 #end
 
-<a href="/categories/new" class="btn btn-warning">Add a New Category</a>
+<p>Add a category here:</p>
+
+<form action="/categories" method="post">
+  <label for="name">Category name</label>
+  <input id="name" name="name" type="text">
+  <button type="submit" class="btn btn-success">Add Category</button>
+</form>
+
 <a href="/" class="btn btn-primary">Go Home</a>
 <a href="/all-tasks" class="btn btn-success">View All Tasks</a>
