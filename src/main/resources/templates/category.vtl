@@ -5,21 +5,31 @@
 #end
 
 
-<h1>Add a Task to $category.getName() </h1>
+<h1>Update $category.getName()</h1>
 
-<form action="/categories/$category.getId()" method="post">
-  <input id="categoryId" name="categoryId" type="hidden" value="$category.getId()">
+<form action="/categories/$category.getId()/update" method="post">
+  <input id="id" name="id" type="hidden" value="$category.getId()">
 
   <div class="form-group">
-    <label for="description">Task Description</label>
-    <input id="description" name="description" type="text">
+    <label for="name">Update Category</label>
+    <input id="name" name="name" type="text">
   </div>
 
-  <button type="submit" class="btn btn-warning">Add Task</button>
+  <button type="submit" class="btn btn-warning">Update Category</button>
+</form>
+
+
+<h1>Add a Task to $category.getName() </h1>
+
+<form action="/add_tasks" method="post">
+    <input id="category_id" type="hidden" name="category_id" value="$category.getId()">
+    <label for="task_id">Select a task</label>
+    <select id="task_id" name="task_id" type="text">
+      #foreach($task in $allTasks)
+        <option value="$task.getId()">$task.getDescription() </option>
+      #end
+    </select>
+      <button type="submit">Add task</button>
 </form>
 
 <h3>Mark task as complete</h3>
-
-
-<a href="/categories" class="btn btn-default">View All Categories</a>
-<a href="/all-tasks" class="btn btn-warning">All tasks</a>

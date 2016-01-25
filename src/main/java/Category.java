@@ -60,6 +60,16 @@ public class Category {
     }
   }
 
+  public void update(String name) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE categories SET name = :name WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
   public void addTask(Task task) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO categories_tasks (category_id, task_id) VALUES (:category_id, :task_id)";

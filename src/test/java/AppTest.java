@@ -61,30 +61,28 @@ public class AppTest extends FluentTest {
     assertThat(pageSource()).contains("Yardwork");
   }
 
-// As a user, I want to create new lists of different categories so that I can keep similar tasks together (phone calls, school work, house work, errands to run, bills to pay, etc)
-  // @Test
-  // public void multipleCategoriesAreCreated() {
-  //   Category myCategory = new Category("Household chores");
-  //   myCategory.save();
-  //   Category mySecondCategory = new Category("Grocery shopping");
-  //   mySecondCategory.save();
-  //   goTo("http://localhost:4567/categories");
-  //   assertThat(pageSource()).contains("Household chores");
-  //   assertThat(pageSource()).contains("Grocery shopping");
-  // }
+  @Test
+  public void categoriesAreUpdated() {
+    Category myCategory = new Category("Yardwork");
+    myCategory.save();
+    Task myTask = new Task("Mow the lawn");
+    myTask.save();
+    goTo("http://localhost:4567/categories/" + Integer.toString(myCategory.getId()));
+    fill("#name").with("Home chores");
+    submit(".btn-warning");
+    assertThat(pageSource()).contains("Home chores");
+  }
 
-// As a user, I want to select a single list and see the tasks for it.
-  // @Test
-  // public void taskIsCreatedTest() {
-  //   goTo("http://localhost:4567/");
-  //   click("a", withText("Add a New Category"));
-  //   fill("#name").with("Household chores");
-  //   submit(".btn");
-  //   click("a", withText("Household chores"));
-  //   click("a", withText("Add a new task"));
-  //   fill("#description").with("Sweep floor");
-  //   submit(".btn");
-  //   assertThat(pageSource()).contains("Sweep floor");
-  // }
+  @Test
+  public void taskAddedToCategory() {
+    Category myCategory = new Category("Yardwork");
+    myCategory.save();
+    Task myTask = new Task("Rake leaves");
+    myTask.save();
+    goTo("http://localhost:4567/categories/" + Integer.toString(myCategory.getId()));
+    click("option", withText("Rake leaves"));
+    submit(".btn-success");
+    assertThat(pageSource()).contains("Rake leaves");
+  }
 
 }
