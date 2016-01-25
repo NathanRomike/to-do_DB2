@@ -1,17 +1,19 @@
 <h1>All Tasks</h1>
 
-<div class="row">
-#foreach($category in $categories)
-  <div class="col-md-4">
-    <h3><a href="/categories/$category.getId()">$category.getName()</a></h3>
- #foreach ($task in $category.getTasks())
-   <li>$task.getDescription()</li>
- #end
- </div>
-#end
-</div>
+<ul>
+  #foreach ($task in $tasks)
+    <li><a href="/tasks/$task.getId()">$task.getDescription()</a></li>
+  #end
+</ul>
 
 <br>
+
+<h3>Add a new task</h3>
+<form action="/tasks" method="post">
+  <label for="description">Task Description</label>
+  <input id="description" name="description" type="text" required>
+  <button type="submit" class="btn btn-primary">Add Task</button>
+</form>
+
 <br>
-<a href="/" class="btn btn-primary">Go Home</a>
 <a href="/categories" class="btn btn-success">View Categories</a>

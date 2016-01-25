@@ -11,12 +11,6 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
-    get("/", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
 // READ ALL TASKS LIST
 
     get("/tasks", (request, response) -> {
@@ -33,6 +27,7 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String description = request.queryParams("description");
       Task newTask = new Task(description);
+      newTask.save();
       response.redirect("/tasks");
       return null;
     });
@@ -53,10 +48,10 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Task task = Task.find(Integer.parseInt(request.params("id")));
       String description = request.queryParams("description");
-      task.update("description");
-      model.put("template", "templates/task.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      task.update(description);
+      response.redirect("/tasks/" + Integer.toString(task.getId()));
+      return null;
+    });
 
 // DELETE TASK TO TASK PAGE
 

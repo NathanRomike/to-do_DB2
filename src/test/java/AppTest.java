@@ -28,20 +28,31 @@ public class AppTest extends FluentTest {
 // As a user, I want to see a welcome page that includes where I can go and what I can do.
   @Test
     public void rootTest() {
-      goTo("http://localhost:4567/");
+      goTo("http://localhost:4567/tasks");
       assertThat(pageSource()).contains("Welcome");
     }
 
-// As a user, I want to see all of the lists that I have created so that I can manage them one at a time.
-  // @Test
-  // public void categoryIsCreatedTest() {
-  //   goTo("http://localhost:4567/");
-  //   click("a", withText("Add a New Category"));
-  //   fill("#name").with("Household chores");
-  //   submit(".btn");
-  //   assertThat(pageSource()).contains("Household chores");
-  // }
+// As a user, I want to see all of the tasks that I have created so that I can manage them one at a time.
+  @Test
+  public void taskIsCreatedTest() {
+    goTo("http://localhost:4567/tasks");
+    fill("#description").with("Do the dishes");
+    submit(".btn-primary");
+    assertThat(pageSource()).contains("Do the dishes");
+  }
 
+  @Test
+  public void taskIsUpdatedTest() {
+    Task myTask = new Task("Mow the lawn");
+    myTask.save();
+    Category myCategory = new Category("Household chores");
+    myCategory.save();
+    System.out.println(Integer.toString(myTask.getId()));
+    goTo("http://localhost:4567/tasks/" + Integer.toString(myTask.getId()));
+    fill("#description").with("Mow the backyard");
+    submit(".btn-warning");
+    assertThat(pageSource()).contains("Mow the backyard");
+  }
 // As a user, I want to create new lists of different categories so that I can keep similar tasks together (phone calls, school work, house work, errands to run, bills to pay, etc)
   // @Test
   // public void multipleCategoriesAreCreated() {
