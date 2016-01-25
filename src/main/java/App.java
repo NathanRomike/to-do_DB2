@@ -23,7 +23,7 @@ public class App {
 
 // CREATE TASK TO TASKS LIST
 
-    post("/tasks", (request, response) -> {
+    post("/tasks/create", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String description = request.queryParams("description");
       Task newTask = new Task(description);
@@ -31,6 +31,16 @@ public class App {
       response.redirect("/tasks");
       return null;
     });
+
+// // DELETE TASK TO TASKS PAGE
+//
+//     post("/tasks/delete", (request, response) -> {
+//       HashMap<String, Object> model = new HashMap<String, Object>();
+//       Task task = Task.find(Integer.parseInt(request.params("id")));
+//       task.delete();
+//       response.redirect("/tasks");
+//       return null;
+//     });
 
 // READ TASK to TASK PAGE
 
@@ -53,16 +63,6 @@ public class App {
       return null;
     });
 
-// DELETE TASK TO TASK PAGE
-
-    post("/tasks/:id/delete", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      Task task = Task.find(Integer.parseInt(request.params("id")));
-      task.delete();
-      model.put("template", "templates/task.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
 // READ ALL CATEGORIES LIST
     get("/categories", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -71,6 +71,25 @@ public class App {
       model.put("template", "templates/categories.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+// CREATE CATEGORY TO CATEGORIES LIST
+
+    post("/categories/create", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("name");
+      Category newCategory = new Category(name);
+      newCategory.save();
+      response.redirect("/categories");
+      return null;
+    });
+
+// DELETE CATEGORY TO CATEGORIES LIST
+
+// READ CATEGORY PAGE
+
+// UPDATE CATEGORY TO CATEGORY PAGE
+
+
 
   }
 }

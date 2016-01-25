@@ -47,12 +47,20 @@ public class AppTest extends FluentTest {
     myTask.save();
     Category myCategory = new Category("Household chores");
     myCategory.save();
-    System.out.println(Integer.toString(myTask.getId()));
     goTo("http://localhost:4567/tasks/" + Integer.toString(myTask.getId()));
     fill("#description").with("Mow the backyard");
     submit(".btn-warning");
     assertThat(pageSource()).contains("Mow the backyard");
   }
+
+  @Test
+  public void categoryIsCreated() {
+    goTo("http://localhost:4567/categories");
+    fill("#name").with("Yardwork");
+    submit(".btn-success");
+    assertThat(pageSource()).contains("Yardwork");
+  }
+
 // As a user, I want to create new lists of different categories so that I can keep similar tasks together (phone calls, school work, house work, errands to run, bills to pay, etc)
   // @Test
   // public void multipleCategoriesAreCreated() {
