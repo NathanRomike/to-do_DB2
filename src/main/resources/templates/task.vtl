@@ -16,3 +16,16 @@
 
   <button type="submit" class="btn btn-warning">Update Task</button>
 </form>
+
+<h1>Add a Category to $task.getDescription</h1>
+
+<form action="/add-categories" method="post">
+  <input id="task_id" name="task_id" type="hidden" value="$task.getId()">
+  <label for="category_id">Select a Category</label>
+  <select id="category_id" name="category_id" type="text">
+    #foreach($category in $allCategories)
+      <option value="$category.getId()">$category.getName()</option>
+    #end
+  </select>
+    <button type="submit" class="btn btn-success">Add Category</button>
+</form>

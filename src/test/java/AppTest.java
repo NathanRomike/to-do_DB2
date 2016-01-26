@@ -85,4 +85,16 @@ public class AppTest extends FluentTest {
     assertThat(pageSource()).contains("Rake leaves");
   }
 
+  @Test
+  public void categoryAddedToTask() {
+    Category myCategory = new Category("YardWork");
+    myCategory.save();
+    Task myTask = new Task("Mow the lawn");
+    myTask.save();
+    goTo("http://localhost:4567/tasks/" + Integer.toString(myTask.getId()));
+    click("option", withText("YardWork"));
+    submit(".btn-success");
+    assertThat(pageSource()).contains("YardWork");
+  }
+
 }

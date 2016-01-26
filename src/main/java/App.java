@@ -47,10 +47,23 @@ public class App {
     get("/tasks/:id", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Task task = Task.find(Integer.parseInt(request.params("id")));
+      List<Category> categories = Category.all();
       model.put("task", task);
+      model.put("allCategories", categories);
       model.put("template", "templates/task.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    post("/add-categories", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int taskId = Integer.parseInt(request.queryParams("task_id"));
+      int categoryId = Integer.parseInt(request.queryParams("category_id"));
+      Category category = Category.find(categoryId);
+      Task task = Task.find(taskId);
+      task.addCategory(category);
+      response.redirect("/tasks/" + taskId);
+      return null;
+    });
 
 // UPDATE TASK TO TASK PAGE
 
